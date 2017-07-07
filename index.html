@@ -1,0 +1,132 @@
+<!DOCTYPE HTML>
+
+<html>
+
+	<head>
+		
+        <title>Reaction Timer</title>
+        
+        <style type="text/css">
+            
+            #shape{
+                height: 200px;
+                width: 200px;
+                background-color: red;
+                display: none;
+                position: relative;
+            }
+            
+            body{
+                background-color: black;
+                color: white;
+            }
+            
+            #stopButton , #time{
+               display: none; 
+            }
+            
+        </style>
+        
+	</head>
+	
+	<body>
+        
+        <h1>Test Your Reactions!</h1>
+        <p>Touch The Shapes As Quickly As Possible</p>
+        <button id="startButton">Start</button>
+        <button id="stopButton">Stop</button>
+        <p id="time">Time Taken : <span id="timeTaken"></span></p>
+        
+        <div id="shape"></div>
+        
+		<script type="text/javascript">
+            
+            document.getElementById("startButton").onclick = function(){
+                
+                document.getElementById("startButton").style.display = "none";
+                
+                document.getElementById("stopButton").style.display = "block";
+                
+                document.getElementById("time").style.display = "block";
+                
+                document.getElementById("stopButton").onclick = function(){
+                    
+                    document.getElementById("stopButton").style.display = "none";
+                
+                    document.getElementById("startButton").style.display = "block";
+                    
+                    location.reload();
+                    
+                }
+                
+                var start = new Date().getTime();
+
+                function getRandomColor(){
+                    var letters = '0123456789ABCDEF'.split('');
+                    var color = '#';
+                    for(var i = 0; i < 6; i++){
+                        color += letters[Math.floor(Math.random() * 16)];
+                    }
+                    return color;
+                }
+
+                function makeShapeAppear()
+                {
+                    if (Math.random() > 0.5){
+
+                        document.getElementById("shape").style.borderRadius = "50%" ;
+                    }
+
+                    else{
+                        document.getElementById("shape").style.borderRadius = "0%" ;
+                    }
+
+                    var top = Math.random() * 400;
+
+                    var left = Math.random() * 400;
+
+                    var width = (Math.random() * 150) + 50 ;
+
+                    document.getElementById("shape").style.display = "block";
+
+                    document.getElementById("shape").style.backgroundColor = getRandomColor();
+
+                    document.getElementById("shape").style.top = top + "px" ;
+
+                    document.getElementById("shape").style.left = left + "px";
+
+                    document.getElementById("shape").style.width = width + "px" ;
+
+                    document.getElementById("shape").style.height = width + "px" ;
+
+                    start = new Date().getTime();
+                }
+
+                function makeDelay()
+                {
+                    setTimeout(makeShapeAppear,Math.random() * 3000);
+                }
+
+                makeDelay();
+
+                document.getElementById("shape").onclick = function()
+                {
+
+                    document.getElementById("shape").style.display = "none";
+
+                    var end = new Date().getTime();
+
+                    var timeTaken = (end - start)/1000;
+
+                    document.getElementById("timeTaken").innerHTML = timeTaken + " s"   
+
+                    makeDelay();
+
+                }
+            } 
+            
+		</script>
+	
+	</body>	
+	
+</html>
